@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+
+{% block title %} Productos {% endblock title %}
+
+{% block body %}
+    <div class="container">
+        <h1>Productos</h1>
+        <!-- START SECTION STORE -->
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <div class="row row-cols-1 row-cols-md-4 g-4">
+                    {% for product in context['dataProductsAll'] %}
+                        {% for businessID in dataBusiness %}
+                            {% if businessID.business_id == product.business_id %}
+                                <form onsubmit="addToCart(this); return false;">
+                                    <div class="col">
+                                        <div class="card shadow-sm h-100">
+                                            <div class="card-header bg-dark text-white">
+                                                <h5 class="card-title h5">{{ product.product_name }}</h5>
+                                            </div>
+                                            <div class="cover">
+                                                <img src="{{ product.photo }}" class="img-src _zoom card-img-top" alt="...">
+                                            </div>
+                                            <div class="card-body cover-description">
+                                                <input type="hidden" name="product_id" value="{{ product.product_id }}">
+                                                <input type="hidden" name="business_id" value="{{ businessID.business_id }}">
+                                                <p class="card-text description bg-light shadow-sm">{{ product.description }}</p>
+                                                <h5 class="item-price mt-3">C$ {{ product.unit_price }}</h5>
+                                            </div>
+                                            <div class="card-footer item-details">
+                                                <div class="btn-group" role="group">
+                                                    <div class="btn btn-sm btn-outline-primary" id="decrease" onclick="decrementarValue('#product_{{product.product_id}}')" value="Decrease Value">-</div>
+                                                    <input type="number" min="1" class="_input _number" name="cantProduct" id="product_{{product.product_id}}" value="1"/>
+                                                    <div class="btn btn-sm btn-outline-primary" id="increase" onclick="incrementarValue('#product_{{product.product_id}}')" value="Increase Value">+</div>
+                                                </div>
+                                                <div class="float-end">
+                                                    <button type="submit" class="item-button btn btn-outline-primary btn-links"><i class='bx bxs-cart-add h5'></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+                <!-- END SECTION STORE -->
+            </div>
+        </div>
+    </div>
+
+    <hr  class="my-5">
+
+    <!-- Seccion de comentarios -->
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-7 col-lg-7">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <!-- Formulario de reseñas  -->
+                        <form method="POST">
+                            <div class="row">
+                                <!-- Columan de entrada de comentarios -->
+                                <div class="col-12">
+                                    <h5><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Agregar comentarios para <strong>{{ dataBusiness.business_name }}</strong></h5>
+                                    <div class="form-group">
+                                        <textarea name="review" cols="30" rows="9" class="form-control text-review" placeholder="Comenta..."></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Columna de estrellas -->
+                                <div class="col-6" id="_form">
+                                    <h5>Agrega una calificación</h5>
+                                    <p class="clasificacion">
+                                        <input id="radio1" type="radio" name="estrellas" value="5">
+                                        <label for="radio1"><i class="fa fa-star" aria-hidden="true"></i></label>
+
+                                        <input id="radio2" type="radio" name="estrellas" value="4">
+                                        <label for="radio2"><i class="fa fa-star" aria-hidden="true"></i></label>
+
+                                        <input id="radio3" type="radio" name="estrellas" value="3">
+                                        <label for="radio3"><i class="fa fa-star" aria-hidden="true"></i></label>
+
+                                        <input id="radio4" type="radio" name="estrellas" value="2">
+                                        <label for="radio4"><i class="fa fa-star" aria-hidden="true"></i></label>
+                                        
+                                        <input id="radio5" type="radio" name="estrellas" value="1">
+                                        <label for="radio5"><i class="fa fa-star" aria-hidden="true"></i></label>
+                                    </p>
+                                </div>
+
+                                <div class="col-6 mt-4 text-center">
+                                    <button type="submit" {% if btnMessage == "Actualizar" %} class="ver btn btn-warning btn-block" {% else %} class="ver btn btn-success btn-block" {% endif %} >
+                                        {% if btnMessage == "Actualizar" %} Actualizar tu comentario {% else %} Guardar comentario {% endif %}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+           
+            {% if context['announce'] %}
+                {% for announce in context['announce'] %}
+                    {% for businessID in dataBusiness %}
+                        {% if businessID.business_id == announce.business_id %}
+                            <div class="col-12 col-md-5 col-lg-5">
+                                <div class="contenidos text-center">
+                                    <div class="plan">
+                                        <hgroup>
+                                            <h1>Oferta del día</h1>
+                                            <h2>C${{announce.price}}<span class="perUnit">/Unidad</span></h2>
+                                            <img class="img-fluid" src="{{announce.banner}}" alt="">
+                                            <h3>{{announce.product_name}}</h3>
+                                            <h4>{{announce.mark}}</h4>
+                                            <ul>
+                                                <li>{{announce.description}}</li>
+                                            </ul>
+                                        </hgroup>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+                <!-- div class="col-12 col-md-5 col-lg-5">
+                    <div class="contenidos text-center">
+                        <div class="plan">
+                            <hgroup>
+                                <h1>No hay ofertas</h1>
+                                <h2>C$000.00<span class="perUnit">/Unidad</span></h2>
+                                <img class="img-fluid" src="https://res.cloudinary.com/cloudinary-vruiz/image/upload/v1639175560/hzroczgkoi6txzxnomgy.png" alt="">
+                                <h3>{{context['announce'][0][4]}}</h3>
+                                <h4>Espere las proximas ofertas</h4>
+                                <ul>
+                                    <li>{{context['announce'][0][7]}}</li>
+                                    <li>¡Mejores precios!</li>
+                                    <li>¡Calidad y atención!</li>
+                                </ul>
+                            </hgroup>
+                        </div>
+                    </div>
+                </div -->
+
+            <!-- Columna para ver los comentarios -->
+            <div class="col-12">
+                <h3><i class="bi bi-chat-left-text"></i> Comentarios:</h3>
+                <div class="container">
+                    <div class="row">
+                        {% for row in dataReview: %}
+                            <div class="card bg-light mb-3" style="max-width: 17.3rem;">
+                                <div class="card-header">Comentado por: {{row.username}}</div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Le dio {{row.score}} estrellas</h5>
+                                    <p class="card-text text-justify">{{row.review}}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

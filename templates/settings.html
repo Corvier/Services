@@ -1,0 +1,243 @@
+{% extends 'base.html' %}
+
+{% block title %}Configuraciones{% endblock title %}
+
+{% block body %}
+    <!-- Plantilla con configuraciones de usuarios -->
+    <div class="container">
+        <div class="row">
+            <h1><i class="fa fa-cogs" aria-hidden="true"></i> Configuraciones</h1>
+            <hr>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class='bx bxs-edit-alt'></i> Configuraciones del usuario</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-12 col-xs-12">
+                                <div class="_card-contenido">
+                                    <img src="{{ user['dataUser'][7] }}" alt="imagen-user">
+                                    <h1>{{ user['dataUser'][1] + " " + user['dataUser'][2]}}</h1>
+                                    <h2>{{ user['dataUser'][3] }}</h2>
+
+                                    <button class="btn rounded-pill btn-md btn-primary mt-5" id="btn-O-M"><span><i class="fa fa-pencil" aria-hidden="true"></i></span> Editar datos</button>
+                                    <!-- <a class="_button" id="btn-O-M" href="#Update"><span><i class="fa fa-pencil" aria-hidden="true"></i></span> Editar datos</a> -->
+                                </div>
+                            </div>
+
+                            <div class="col-md-8 col-sm-12 col-xs-12">
+                                <div class="shadow d-none" id="ocultar">
+                                    <div class="card-body">
+                                        <form action="{{ url_for('configuraciones') }}" method="POST" class="needs-validation" novalidate>
+                                            <div class="row">
+                                                <div class="col-lg-6 form-group my-1">
+                                                    <label for="username"><i class='bx bx-user'></i> Username</label>
+                                                    <input type="text" class="form-control" name="username" id="username" value="{{ user['dataUser'][1] }}" placeholder="Username">
+                                                </div>
+
+                                                <div class="col-lg-6 form-group my-1">
+                                                    <label for="email"><i class='bx bx-mail-send'></i> Email</label>
+                                                    <input type="email" class="form-control" name="email" id="email" value="{{ user['dataUser'][3] }}" placeholder="example@exa.com">
+                                                </div>
+            
+                                                <div class="col-lg-6 form-group my-1">
+                                                    <label for="phone"><i class='bx bxs-phone'></i> Teléfono</label>
+                                                    <input type="number" class="form-control" name="phone" min="8" id="phone" value="{{ user['dataUser'][6] }}" autocomplete="off"  placeholder="Teléfono" required>
+                                                </div>
+            
+                                                <div class="col-lg-6 form-group my-1">
+                                                    <label for="direccion"><i class='bx bxs-direction-left'></i> Dirección</label>
+                                                    <input type="text" class="form-control" name="direccion" id="direccion" value="{{ user['dataUser'][5] }}" placeholder="Dirección KM 21" required>
+                                                </div>
+            
+                                                <div class="col-lg-4 form-group my-1">
+                                                    <label for="password"><i class='bx bx-low-vision'></i> Nueva contraseña</label>
+                                                    <input type="password" class="form-control" name="password" id="password" autocomplete="off" placeholder="Contraseña" required>
+                                                </div>
+            
+                                                <div class="col-lg-4 form-group my-1">
+                                                    <label for="confirmation"><i class='bx bx-low-vision'></i> Repetir nueva contraseña</label>
+                                                    <input type="password" class="form-control" name="confirmation" id="confirmation" autocomplete="off" placeholder="Repetir Contraseña" required>
+                                                </div>
+
+                                                <div class="col-lg-3 form-group mt-4">
+                                                    <!-- Button trigger modal -->
+                                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                                                        <i class='bx bx-images h5'></i>  Cambiar foto
+                                                    </button>
+                                                    <input type="hidden" class="form-control" id="imagen" name="imagen">
+                                                </div>
+
+                                                <div class="form-group text-center d-grid gap-2 mt-2">
+                                                    <button type="submit" class="btn btn-primary btn-block"><i class='bx bxs-save'></i> Guardar cambios</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-3">
+
+            {% if session['administrador'] %}
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class='bx bxs-edit-alt'></i> Configuraciones del negocio</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                    <div class="_card-contenido">
+                                            <img src="{{ user['dataBusinessUser'][0][9] }}" alt="imagen-business">
+                                            <h1>{{ user['dataBusinessUser'][0][3] }}</h1>
+                                            <h2>{{ user['dataBusinessUser'][0][4] }}</h2>
+                                            <button class="btn rounded-pill btn-md btn-primary mt-5" id="btn-O-M2"><span><i class="fa fa-pencil" aria-hidden="true"></i></span> Editar datos</button>
+                                            <!-- <a class="_button" id="btn-O-M" href="#Update"><span><i class="fa fa-pencil" aria-hidden="true"></i></span> Editar datos</a> -->
+                                    </div>
+                                </div>
+
+                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                    <div class="shadow d-none" id="ocultar2">
+                                        <div class="card-body">
+                                            <form action="{{ url_for('configuraciones') }}" method="POST" class="needs-validation" novalidate>
+                                                <div class="row">
+                                                    <div class="col-lg-6 form-group my-1">
+                                                        <label for="business_name"><i class='bx bxs-store'></i> Nombre del negocio</label>
+                                                        <input type="text" class="form-control" name="business_name" id="business_name" value="{{ user['dataBusinessUser'][0][3] }}">
+                                                    </div>
+
+                                                    <div class="col-lg-6 form-group my-1">
+                                                        <label for="direccion"><i class='bx bxs-direction-left'></i> Dirección</label>
+                                                        <input type="text" class="form-control" name="business_direccion" id="direccion" value="{{ user['dataBusinessUser'][0][4] }}">
+                                                    </div>
+                
+                                                    <div class="col-lg-6 form-group my-1">
+                                                        <label for="phone"><i class='bx bxs-phone'></i> Teléfono</label>
+                                                        <input type="number" class="form-control" min="8" name="business_phone" id="phone" value="{{ user['dataBusinessUser'][0][5] }}" autocomplete="off">
+                                                    </div>
+
+                                                    <div class="col-lg-6 form-group my-1">
+                                                        <label for="descripcion"><i class='bx bx-paragraph'></i> Descripción</label>
+                                                        <input type="text" class="form-control" name="business_descripcion" id="descripcion" value="{{ user['dataBusinessUser'][0][8] }}">
+                                                    </div>
+
+                                                    <div class="col-md-6 form-group my-1">
+                                                        <label class="form-label"><i class='bx bx-time'></i> Horario de atención</label>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <label for="appt" class="form-label">AM</label>
+                                                                <input type="time" class="form-control" name="ampmStart" value="{{user['dataBusinessUser'][0][6]}}" min="06:00" max="22:00" required>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label for="appt" class="form-label">PM</label>
+                                                                <input type="time" class="form-control" name="ampmEnd" value="{{user['dataBusinessUser'][0][7]}}" min="06:00" max="22:00" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6 form-group mt-4">
+                                                        <br>
+                                                        <!-- Button trigger modal -->
+                                                        <button type="button" class="btn btn-sm btn-warning mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                                                            <i class='bx bx-images h5'></i> Cambiar foto
+                                                        </button>
+                                                        <input type="hidden" class="form-control" id="imagen2" name="imagen2">
+                                                    </div>
+
+                                                    <div class="form-group text-center d-grid gap-2 mt-2">
+                                                        <button type="submit" class="btn btn-primary btn-block"><i class='bx bxs-save'></i> Guardar cambios</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+
+        <!-- Modal para la foto de usuario -->
+        <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel1">Cambiar foto de usuario</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="card card-responsiva">
+                            <div class="card-footer">
+                                <label class="form-label"> Seleciona una foto (opcional)</label>
+                                <input class="form-control" id="img-uploader" type="file">
+                            </div>
+
+                            <img id="img-preview" class="img-thumbnail rounded">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cargar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para la foto de negocio -->
+        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel2">Cambiar foto del negocio</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="card card-responsiva">
+                            <div class="card-footer">
+                                <label class="form-label"> Seleciona una foto (opcional)</label>
+                                <input class="form-control" id="img-uploader2" type="file">
+                            </div>
+
+                            <img id="img-preview2" class="img-thumbnail rounded">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cargar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        // 3. Para mostrar u ocultar el panel de las configuraciones en settings.html
+        let ocultar = document.querySelector('#ocultar');
+        let ocultar2 = document.querySelector('#ocultar2');
+        let btnOcultar = document.querySelector('#btn-O-M');
+        let btnOcultar2 = document.querySelector('#btn-O-M2');
+
+        btnOcultar.onclick = function(){
+
+            ocultar.classList.toggle('d-none');
+        };
+        
+        btnOcultar2.onclick = function(){
+
+            ocultar2.classList.toggle('d-none');
+        };
+    </script>
+{% endblock body %}

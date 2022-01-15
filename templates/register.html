@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block title %}Registrate{% endblock title %}
+
+{% block body %}
+    <div class="container content">
+        <section class="heightAll">
+            <div class="row g-0">
+                <!--- Columna para el formulario de Registros -->
+                <div class="col-lg-6">
+                    <!-- Formulario de registro -->
+                    <div class="card bg-body shadow rounded">
+                        <h2 class="text-center mt-3">¡Bienvenido! Registrate</h2>
+                        <hr>
+                        <div class="card-body">
+                            <form action="{{url_for('register')}}" method="POST" class="needs-validation" novalidate>
+                                <div class="row">
+                                    <div class="col-lg-6 form-group my-1">
+                                        <label for="username"><i class='bx bx-user'></i> Nombre de usuario</label>
+                                        <input type="text" class="form-control" id="username" name="username" placeholder="Nombre de usuario" required>
+                                    </div>
+
+                                    <div class="col-lg-6 form-group my-1">
+                                        <label for="last_name"><i class='bx bx-id-card'></i> Apellidos</label>
+                                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Apellidos" required>
+                                    </div>
+                                    
+                                    <div class="col-lg-6 form-group my-1">
+                                        <label for="email"><i class='bx bx-mail-send'></i> Correo electrónico</label>
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Correo electrónico" required>
+                                    </div>
+
+                                    <div class="col-lg-6 form-group my-1">
+                                        <label for="phone"><i class='bx bxs-phone'></i> Teléfono</label>
+                                        <input type="number" class="form-control" min="8" id="phone" name="phone" autocomplete="off"  placeholder="Teléfono" required>
+                                    </div>
+
+                                    <div class="col-lg-8 form-group my-1">
+                                        <label for="direccion"><i class='bx bxs-direction-left'></i> Dirección</label>
+                                        <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección KM 21" required>
+                                    </div>
+
+                                    <div class="col-lg-4 form-group mt-4">
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            <i class='bx bx-image-add h5 mt-1'></i> Subir foto
+                                        </button>
+                                        <input type="hidden" class="form-control" id="imagen" name="imagen">
+                                    </div>
+
+                                    <div class="col-lg-6 form-group my-1">
+                                        <label for="password"><i class='bx bx-low-vision'></i> Contraseña</label>
+                                        <input type="password" class="form-control" id="password" name="password" autocomplete="off" placeholder="Contraseña" required>
+                                    </div>
+
+                                    <div class="col-lg-6 form-group my-1">
+                                        <label for="confirmation"><i class='bx bx-low-vision'></i> Repetir Contraseña</label>
+                                        <input type="password" class="form-control" id="confirmation" name="confirmation" autocomplete="off" placeholder="Repetir Contraseña" required>
+                                    </div>
+
+                                    <div class="form-group text-center d-grid gap-2 mt-2">
+                                        <button type="submit" class="btn btn-primary btn-block">Crear cuenta</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="card-footer text-center">
+                            <p class="message">¿Ya estas registrado? <a id="re_link" href="{{url_for('login')}}">Ingresa</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!--- Columna para imagen -->
+                <div class="col-lg-6">
+                    <img src="{{ 'https://i.ibb.co/kSCpz26/illustration-register.png' }}" class="img-fluid" alt="illustration-register">
+                </div>
+            </div>
+        </section>
+
+        
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Cargar foto de usuario</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="card card-responsiva">
+                            <div class="card-footer">
+                                <label class="form-label"> Seleciona una foto (opcional)</label>
+                                <input class="form-control" id="img-uploader" type="file">
+                            </div>
+
+                            <img id="img-preview" class="img-thumbnail rounded">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cargar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}

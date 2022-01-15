@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicia sesión{% endblock title %}
+
+{% block body %}
+    <div class="container">
+        <section class="heightAll content">
+            <div class="row g-0">
+                <!--- Columna para el formulario de Login -->
+                <div class="col-lg-6">
+                    <!-- Formulario de registro -->
+                    <div class="card bg-body shadow rounded">
+                        <h2 class="text-center mt-3">Bienvenido de vuelta</h2>
+                        <hr>
+                        <div class="card-body">
+                            <form action="{{url_for('login')}}" method="POST">
+                                <div class="form-group my-2">
+                                    <label for="email"><i class='bx bx-mail-send'></i> Correo electrónico</label>
+                                    <input type="email" class="form-control" id="email" name="email" autocomplete="email" maxlength="254" placeholder="Correo electrónico">
+                                </div>
+                                <div class="form-group my-2">
+                                    <label for="password"><i class='bx bx-low-vision'></i> Contraseña</label>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña">
+                                </div>
+                                <div class="form-group text-center d-grid gap-2 mt-2">
+                                    <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-footer text-center">
+                            <div class="row">
+                                <div class="col-6">
+                                    <p class="message">¿Se te olvidó tu contraseña? <a id="lo_link" href="{{url_for('recoverPassword')}}">Recuperar</a></p>
+                                </div>
+                                <div class="col-6">
+                                    <p class="message">¿Aun no estas registrado? <a id="lo_link" href="{{url_for('register')}}">Registrate</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--- Columna para imagen -->
+                <div class="col-lg-6">
+                    <img src="{{ 'https://i.ibb.co/kSCpz26/illustration-register.png' }}" class="img-fluid" alt="illustration-login">
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock body %}

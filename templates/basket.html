@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Carrito de compra{% endblock title %}
+
+{% block body %}
+    <!-- INICIO SECCION CARRITO -->
+    <main class="style-fondo heightAll">
+        <h1 class="text-center text-white pt-2">Bienvenido al Carrito</h1>
+        <hr>
+        <div class="container">
+            <a href="{{ "/inicio" }}" class="btn btn-success btn-rounded">
+                <i class="fa fa-arrow-left"></i> Regresar
+            </a>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="text-center">Carrito de Compras</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {% for negocio in context['dataResponse'] %}
+                                    <h3>{{negocio.Business}}</h3>
+                                    <table class="table table-bordered table-striped">
+                                        <thead class="text-white bg-dark">
+                                            <tr>
+                                                <th scope="col">Producto</th>
+                                                <th scope="col">Precio</th>
+                                                <th scope="col">Cantidad</th>
+                                                <th scope="col">Precio Total</th>
+                                                <!--th scope="col">Eliminar</th-->
+                                            </tr>
+                                        </thead>
+                                        <tbody id="dataCart">
+                                            {% for row in negocio.detalles %}
+                                                <tr>
+                                                    <th scope="row">{{row.product_name}}</th>
+                                                    <td>{{row.price_unit}}</td>
+                                                    <td>{{row.quantity}}</td>
+                                                    <td>{{row.pricetotal}}</td>
+                                                    <!--td><div class="text-center"><form action=" {{ "/confirmar" }} " method="POST"><button class="btn btn-success btn-sm">Comprar</button></form></div></td-->
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card-footer">
+                                        <h3 class="text-center">Total: </h3>
+                                        <a href="{{ "/confirmar" }}" class="btn btn-primary">Pagar Orden</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock body %}

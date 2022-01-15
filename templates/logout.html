@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Logout{% endblock title %}
+
+{% block body %}
+    <div class="content heightAll">
+        <div class="container login">
+            <div class="row">
+                <div class="col-5"></div>
+                <div class="col-12 col-md-6">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h4 class="card-title">Sesión cerrada</h4>
+                            <p class="card-text">Esperamos que vuelvas pronto! 😀</p>
+                            <a href="{{ "/login" }}" class="btn btn-success">Logueate</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+{% endblock body %}

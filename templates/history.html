@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Historial de compra{% endblock title %}
+
+{% block body %}
+    <div class="container text-black heightAll">
+        <h3 class="text-title text-center text-uppercase">Historial de Compras</h3>
+        <table class="table table-hover">
+            <thead class="thead-dark text-black">
+                <tr>
+                    <th scope="col" class="text-center">Cliente</th>
+                    <th scope="col" class="text-center">Nª Orden</th>
+                    <th scope="col" class="text-center">Producto</th>
+                    <th scope="col" class="text-center">Precio</th>
+                    <th scope="col" class="text-center">Cantidad</th>
+                    <th scope="col" class="text-center">Fecha</th> 
+                    <th scope="col" class="text-center">Total</th> 
+                    <th scope="col" class="text-center">Estado</th>
+                </tr>
+            </thead>
+            
+            {% if context['dataOrders'] and context['dataDetails'] %}
+            <tbody class="text-black">
+                {% for row in context['dataOrders'] %}
+                    {% for row2 in context['dataDetails'] %}
+                        <tr>
+                            <td class="text-center">
+                                {{ session['username'] }}
+                            </td>
+
+                            <td class="text-center">
+                                {{ row.order_id }}
+                            </td>
+                            
+                            <td class="text-center">
+                                {{ row2.product_name }}
+                            </td>
+                            
+                            <td class="text-center">
+                                {{ row2.price_unit }}
+                            </td>
+
+                            <td class="text-center">
+                                {{ row2.quantity }}
+                            </td>
+                            
+                            <td class="text-center">
+                                {{ row.date_created }}
+                            </td>
+
+                            <td class="text-center">
+                                {{ row.total }}
+                            </td>
+
+                            <td class="text-center text-warning">
+                                Pagado
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            </tbody>
+            {% else %}
+                <h3 class="text-center text-danger">No hay compras</h3>
+            {% endif %}
+        </table>
+    </div>
+{% endblock body %}

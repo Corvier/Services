@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio{% endblock title %}
+
+{% block body %}
+    <div class="container-fluid shadow p-4 p-md-5 mb-4 text-black rounded _banner">
+        <div class="col-md-6 px-0">
+            <h1 class="display-4 text-black fst-italic animate__animated animate__faster animate__slideInLeft fw-bold">Services<a href="#" class="h4 text-black">delivery</a></h1>
+            <p class="lead my-3 text-black animate__animated animate__fadeInLeft">Si tu negocio quieres mejorar, un buen servicio delivery deberías comenzar a implementar.</p>
+            <p class="lead mb-0 fw-bold">Rápido y fácil</p>
+        </div>
+    </div>
+    <form action="{{ "/busqueda" }}" method="POST">
+        <div class="container input-group mb-3">
+            <a class="btn btn-outline-secondary" href="{{ "/inicio" }}" id="button-addon1"><i class='bx bx-refresh bx-spin' ></i></a>
+            <input type="text" class="form-control" name="search" placeholder="Buscar" autocomplete="off" aria-label="Buscar" aria-describedby="button-addon2">
+            <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class='bx bx-search-alt bx-tada'></i> Buscar</button>
+        </div>
+    </form>
+
+    <main class="container">
+        <div class="row g-0">
+            <div class="col-md-8 col-lg-8 col-ms-12 col-xs-12">
+                <article class="blog-post">
+                    {% if context['dataBusiness'] or context['dataBusinessSearch'] %}
+                        <div class="row">
+                            {% for category in context['dataCategory'] or context['dataCategorySearch'] %}
+                                <h2 class="pb-4 my-4 fst-italic border-bottom">{{category.category}}</h2>
+                                
+                                {% for business in context['dataBusiness'] or context['dataBusinessSearch'] %}
+                                    {% if business.category_id == category.category_id %}
+                                        <div class="blog-card shadow">
+                                            <div class="meta">
+                                                <div class="photo" style="background-image: url({{business.photo}})"></div>
+                                                <ul class="details">
+                                                    <li class="author"><a href="https://api.whatsapp.com/send?phone={{business.phone}}/" target="_blank" title="Whatsapp">{{business.phone}}</a></li>
+                                                    <li class="date">{{ business.startime }}AM - {{ business.endtime }}PM</li>
+                                                    <li class="tags">
+                                                        <ul>
+                                                            <li><a href="#">{{category.category}}</a></li>
+                                                            <li><a href="#">Calidad</a></li>
+                                                            <li><a href="#">Servicio</a></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="description">
+                                                <h1>{{business.business_name}}</h1>
+                                                <h2>{{ business.direction }}</h2>
+                                                <p>{{ business.description }}</p>
+                                                <p class="read-more">
+                                                    <a class="btn btn-dark rounded-pill btn-links" href="/products/{{business.business_id}}">Hacer pedido</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                    
+                    {% else %}
+                        <div class="col-12">
+                            <div class="alert alert-danger">
+                                <strong>No hay negocios</strong>
+                            </div>
+                        </div>
+                    {% endif %}
+                </article>
+            </div>
+
+            <div class="col-md-4 col-lg-4 col-ms-12 col-xs-12">
+                <div class="position-sticky" style="top: 2rem;">
+                    <div class="p-4">
+                        <h4 class="fst-italic">Ubicación</h4>
+                        <div class="card text-center shadow">
+                            <div class="card-body">
+                                <div>
+                                    <div id="map"></div>
+                                    <!-- <img src="{{context['photoUser']}}" alt="user" class="img-thumbnail img-fluid rounded-circle d-block" height="15"> -->
+                                </div>
+                                
+                                <div class="my-3 mx-4">
+                                    <p class="card-text">Selecciona la ubicación de un negocio.</p>
+                                    <select id="_select-ubicacion" name="_select-ubicacion" class="form-select form-select-sm" aria-label=".form-select-sm">
+                                        <option selected value="12.116112996824123, -86.23889456370239" >Abrir para seleccionar</option>
+                                        {% for business in context['dataBusiness'] %}
+                                            {% for location in context['dataLocation'] %}
+                                                {% if business.business_id == location.business_id %}
+                                                    <option value="{{ location.latitude }}, {{ location.longitude }}">{{ business.business_name }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4">
+                        <div class="p-4 mb-3 bg-light rounded">
+                            <h4 class="fst-italic">Services</h4>
+                            <p class="mb-0 text-justify">Somos una experiencia de hospitalidad y variedad de servicios en constante movimiento. Nos dedicamos a conectar tus necesidades con la solución inmediata que estas buscando desde la comodidad de tu hogar.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+{% endblock body %}
