@@ -5,9 +5,3 @@ SQLAlchemy
 pyOpenSSL
 Flask-Mail
 python-dotenv
-
-
-https://github.com/Corvier/Services.git
-
-
-Hola mundo
